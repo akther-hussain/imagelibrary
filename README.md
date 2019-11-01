@@ -38,7 +38,7 @@ DB_CONNECTION=sqlite
 $ composer install
 ```
 
-*** Run migrate command if database created by you. otherwise attached db can be used to show the content ***
+***Run migrate command if database created by you. otherwise attached db can be used to show the content***
 ```
 $ php artisan migrate
 ```
@@ -49,9 +49,9 @@ $ php artisan key:generate
 ```
 $ php artisan serve
 ```
-***Application will run on http://localhost:8000 url in browser ***
+***Application will run on http://localhost:8000 url in browser***
 
-**Optional to use mix for generating scss to app.css**
+***Optional to use mix for generating scss to app.css***
 ```
 $ npm install
 ```
