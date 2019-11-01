@@ -14,7 +14,7 @@
 - NodeJS, npm, webpack
 - Intervetion/image
 
-**Step to follow**
+**Steps to follow**
 ```
 $ git clone https://github.com/akther-hussain/image-library.git
 
