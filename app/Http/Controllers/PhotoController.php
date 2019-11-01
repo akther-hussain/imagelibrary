@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePhotos;
 use App\Traits\ImageUpload;
 use App\Models\Photo;
+use Exception;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 
 class PhotoController extends Controller
@@ -30,36 +33,37 @@ class PhotoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StorePhotos $request)
     {
-        $request->validate([
-            'title'         =>  'required',
-            'imageFile'     =>  'required|image|mimes:jpeg,png,jpg,gif|max:2048'
-        ]);
-
+        
         // Check if a image has been uploaded
         if ($request->has('imageFile')) {
-            $image = $request->file('imageFile');
-            $name = str_slug($request->input('title'));
-            $folder = '/uploads/images/';
-            $filePath = $folder . $name . '.' . $image->getClientOriginalExtension();
-            $thumbUrl = $folder. '/thumbnails/' . $name . '.' . $image->getClientOriginalExtension();
             
-            // call trait saveImage to upload image
-            $response = $this->saveImage($image, $folder, $name);
+            try {
+                $image = $request->file('imageFile');
+                $name = str_slug($request->input('title'));
+                $folder = '/uploads/images/';
+                $filePath = $folder . $name . '.' . $image->getClientOriginalExtension();
+                $thumbUrl = $folder . '/thumbnails/' . $name . '.' . $image->getClientOriginalExtension();
 
-            if ($response != "") {
-                $result = Photo::create([
-                    'title' => $request->input('title'),
-                    'file_path' => $filePath,
-                    'thumb_url' => $thumbUrl
-                ]);
+                // call trait saveImage to upload image
+                $response = $this->saveImage($image, $folder, $name);
 
-                if ($result) {
-                    flash('Image uploaded successfully.')->success();
-                } else {
-                    flash('Something went wrong. Please try again.')->error();
+                if ($response != "") {
+                    $result = Photo::create([
+                        'title' => $request->input('title'),
+                        'file_path' => $filePath,
+                        'thumb_url' => $thumbUrl
+                    ]);
+
+                    if ($result) {
+                        flash('Image uploaded successfully.')->success();
+                    } else {
+                        flash('Something went wrong. Please try again.')->error();
+                    }
                 }
+            } catch (Exception $e) {
+                Log::wanring($e);
             }
 
             return redirect()->to('/');
@@ -71,10 +75,8 @@ class PhotoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function show(Request $request, $id)
-    {
-        $photo = Photo::findOrfail($id);
-
+    public function show(Photo $photo)
+    {    
         return view('pages.images.show', compact('photo'));
     }
 

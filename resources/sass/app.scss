@@ -13,6 +13,7 @@ html {
     font-family: 'Roboto', sans-serif;
     -webkit-font-smoothing: antialiased;
 }
+body{background: #FFFFFF;}
 
 .band {
     width: 100%;
@@ -30,10 +31,15 @@ html {
     }
 }
 
+@media only screen and (max-width: 500px){
+    .display-4{font-size: 20px;}
+}
+
 @media only screen and (min-width: 850px) {
     .band {
         grid-template-columns: 1fr 1fr 1fr;
     }
+    .display-4{font-size: 30px;}
 }
 
 /* card */
@@ -100,3 +106,6 @@ h1 {
     width: 90px;
 }
 
+.image-form:hover {
+    top: 0;
+}

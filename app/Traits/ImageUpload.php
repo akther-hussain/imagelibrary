@@ -20,9 +20,6 @@ trait ImageUpload
 
         $image = Image::make($uploadedFile);
 
-        // $image->resize(1920, 1080, function ($constraint) {
-        //     $constraint->aspectRatio();
-        // })->save(public_path() . $folder . $filename);
         $image->save(public_path() . $folder . $filename);
 
         $image->resize(350, 240, function ($constraint) {

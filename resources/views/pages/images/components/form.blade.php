@@ -18,9 +18,9 @@
         </div>
     @enderror
 
-    <div class="card">
+    <div class="card image-form">
         <div class="card-body">
-            <form method="POST" action="{{ url('/') }}" enctype="multipart/form-data" class="mb-0">
+            <form method="POST" action="{{ route('photos.store') }}" enctype="multipart/form-data" class="mb-0">
                 <input type="hidden" name="_token" value = "{{ csrf_token() }}">
                 <div class="form-row">
                     <div class="col-md-5 mb-2">
